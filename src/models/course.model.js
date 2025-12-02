@@ -11,10 +11,20 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: [true, "Course description is required"],
     },
-    courseLevel: {
+    category: {
       type: String,
-      enum: ["beginner", "intermediate", "advanced"],
-      default: "beginner",
+      enum: [
+        "Technology",
+        "Business",
+        "Education",
+        "Health & Fitness",
+        "Arts & Culture",
+        "Sports",
+        "Entertainment",
+        "Finance",
+        "Lifestyle",
+      ],
+      required: true,
     },
     price: {
       type: Number,
@@ -31,12 +41,10 @@ const courseSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    lectures: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Lecture",
-      },
-    ],
+    IntroURL: {
+      type: String,
+      lowercase: true,
+    },
   },
   { timestamps: true }
 );
