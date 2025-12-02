@@ -3,7 +3,8 @@ const { uploadOnCloudinary } = require("../utils/cloudinary");
 
 const createCourse = async (req, res) => {
   try {
-    const { title, description, category, price, introURL, driveLink } = req.body;
+    const { title, description, category, price, introURL, driveLink } =
+      req.body;
 
     // Thumbnail (optional)
     const thumbnailLocalPath = req.file?.path;
@@ -78,10 +79,17 @@ const getCourses = async (req, res) => {
   try {
     const courses = await Course.find().sort({ createdAt: -1 });
 
+    if (!courses) {
+      return res.status(404).json({
+        success: false,
+        message: "Empty Cources",
+      });
+    }
+
     return res.status(200).json({
       success: true,
       message: "Courses fetched successfully",
-      data: courses,
+      courses,
     });
   } catch (error) {
     return res.status(500).json({

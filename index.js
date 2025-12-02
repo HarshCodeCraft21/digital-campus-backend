@@ -1,39 +1,40 @@
-require('dotenv').config();
-const express = require('express')
-const app = express()
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
-const connectdb = require("./src/database/db.js")
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const connectdb = require("./src/database/db.js");
 const userRouter = require("./src/routes/user.route.js");
 const courseRouter = require("./src/routes/course.route.js");
+const enrollMentRouter = require("./src/routes/enrollment.route.js");
 
-// Enable CORS
-app.use(cors({
-  origin: ["http://localhost:8081","https://digitalcampus07.netlify.app"], 
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:8081", "https://digitalcampus07.netlify.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
-
-app.use(express.json())
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser())
-
+app.use(cookieParser());
 
 //Routes
 app.use("/api/users", userRouter);
-app.use("/api/course",courseRouter);
+app.use("/api/course", courseRouter);
+app.use("/api/enrollment", enrollMentRouter);
 
-app.get("/hello",(req,res)=>{
-    res.json({message:"Server is Successfully Deployed!!!"})
-})
+app.get("/hello", (req, res) => {
+  res.json({ message: "Server is Successfully Deployed!!!" });
+});
 
 connectdb()
-.then(() => {
+  .then(() => {
     app.listen(process.env.PORT || 3000, () => {
-        console.log(`🗄️  Server is running on Port: ${process.env.PORT}`);
-    })
-})
-.catch((err) => {
-   console.log("MongoDB Connection Failed" , err)
-})
+      console.log(`🗄️  Server is running on Port: ${process.env.PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log("MongoDB Connection Failed", err);
+  });
