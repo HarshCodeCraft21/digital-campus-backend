@@ -1,5 +1,8 @@
 const express = require("express");
-const { createCourse } = require("../controllers/course.controller.js");
+const {
+  createCourse,
+  getCourses,
+} = require("../controllers/course.controller.js");
 const upload = require("../middleware/multer.js");
 
 const { verifyJwt } = require("../middleware/verifyJwt.js");
@@ -9,4 +12,5 @@ router
   .route("/create-course")
   .post(upload.single("thumbnail"), verifyJwt, createCourse);
 
+router.route("/courses").get(verifyJwt, getCourses);
 module.exports = router;
