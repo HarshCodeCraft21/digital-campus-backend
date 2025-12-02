@@ -5,11 +5,11 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const connectdb = require("./src/database/db.js")
 const userRouter = require("./src/routes/user.route.js");
-
+const courseRouter = require("./src/routes/course.route.js");
 
 // Enable CORS
 app.use(cors({
-  origin: ["http://localhost:8081", "https://digitalcampus01.netlify.app","https://digitalcampus07.netlify.app"],  // Replace with your deployed frontend URL
+  origin: ["http://localhost:8081","https://digitalcampus07.netlify.app"], 
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
@@ -22,7 +22,7 @@ app.use(cookieParser())
 
 //Routes
 app.use("/api/users", userRouter);
-
+app.use("/api/course",courseRouter);
 
 app.get("/hello",(req,res)=>{
     res.json({message:"Server is Successfully Deployed!!!"})

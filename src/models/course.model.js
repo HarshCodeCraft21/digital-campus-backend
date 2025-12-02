@@ -23,6 +23,7 @@ const courseSchema = new mongoose.Schema(
         "Entertainment",
         "Finance",
         "Lifestyle",
+        "Others"
       ],
       required: true,
     },
@@ -33,7 +34,7 @@ const courseSchema = new mongoose.Schema(
     },
     thumbnail: {
       type: String,
-      required: true,
+      default:"https://tinyurl.com/ypz2spcb"
     },
     enrollments: [
       {
@@ -41,9 +42,23 @@ const courseSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    IntroURL: {
+    introURL: {
       type: String,
       lowercase: true,
+    },
+    driveLink: {
+      type: String,
+      lowercase: true,
+      required: [true, "Enter your drive link"],
+      validate: {
+        validator: function (value) {
+          const driveRegex =
+            /^(https?:\/\/)?(drive\.google\.com\/)(file\/d\/|open\?id=|drive\/folders\/|drive\/u\/\d\/folders\/).+/;
+
+          return driveRegex.test(value);
+        },
+        message: "Please enter a valid Google Drive link",
+      },
     },
   },
   { timestamps: true }
