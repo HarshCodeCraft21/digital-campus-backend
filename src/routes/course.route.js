@@ -12,5 +12,5 @@ router
   .route("/create-course")
   .post(upload.single("thumbnail"), verifyJwt, createCourse);
 
-router.route("/courses").get(verifyJwt, getCourses);
+router.route("/courses").get(getCourses);
 module.exports = router;
