@@ -44,11 +44,9 @@ const courseSchema = new mongoose.Schema(
     ],
     introURL: {
       type: String,
-      lowercase: true,
     },
     driveLink: {
       type: String,
-      lowercase: true,
       required: [true, "Enter your drive link"],
       validate: {
         validator: function (value) {
